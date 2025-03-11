@@ -23,7 +23,7 @@ return Application::configure(basePath: dirname(__DIR__))
             if ($request->is('api/*')) {
                 return response()->json([
                     'success' => false,
-                    'message' => 'Internal server error, Please try again later',
+                    'message' => $e->getMessage(),
                 ], 500);
             }
         });
@@ -32,7 +32,7 @@ return Application::configure(basePath: dirname(__DIR__))
             if ($request->is('api/*')) {
                 return response()->json([
                     'success' => false,
-                    'message' => 'Internal server error, Please try again later',
+                    'message' => $e->getMessage(),
                 ], 500);
             }
         });

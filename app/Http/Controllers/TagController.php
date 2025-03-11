@@ -1,72 +1,54 @@
 <?php
-
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 use App\Models\Tag;
+use Illuminate\Http\Request;
 
 class TagController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index(Request $request)
     {
         $tags = $request->user()->tags;
-
-        return response()->json([
-            'status' => 'success',
-            'data' => [
-                'tags' => $tags
-            ]
-        ]);
+        return response()->json($tags);
     }
-
-    /**
-     * Store a newly created resource in storage.
-     */
+    
     public function store(Request $request)
     {
-        $tag = $request->user()->tags()->create([
-            'name' => $request->name
+        $validatedData = $request->validate([
+            'name' => 'required|string|max:255',
         ]);
-
-        return response()->json([
-            'status' => 'success',
-            'message' => 'Tag créé avec succès',
-            'data' => [
-                'tag' => $tag
-            ]
-        ], 201);
+        
+        $tag = $request->user()->tags()->create($validatedData);
+        
+        return response()->json($tag, 201);
     }
-
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
+    
+    public function show(Request $request, $id)
     {
-        return response()->json([
-            'status' => 'success',
-            'data' => [
-                'tag' => Tag::find($id)
-            ]
+        $tag = $request->user()->tags()->findOrFail($id);
+        
+        return response()->json($tag);
+    }
+    
+    public function update(Request $request, $id)
+    {
+        $tag = $request->user()->tags()->findOrFail($id);
+        
+        $validatedData = $request->validate([
+            'name' => 'required|string|max:255',
         ]);
+        
+        $tag->update($validatedData);
+        
+        return response()->json($tag);
     }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
+    
+    public function destroy(Request $request, $id)
     {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
+        $tag = $request->user()->tags()->findOrFail($id);
+        $tag->delete();
+        
+        return response()->json(null, 204);
     }
 }
