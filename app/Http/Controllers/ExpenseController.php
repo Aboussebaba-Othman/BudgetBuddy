@@ -2,7 +2,6 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
-use App\Models\Expense;
 use Illuminate\Http\Request;
 
 class ExpenseController extends Controller
@@ -65,7 +64,6 @@ class ExpenseController extends Controller
             'tags.*' => 'exists:tags,id',
         ]);
         
-        // Vérifier que les tags appartiennent à l'utilisateur
         $userTagIds = $request->user()->tags()->whereIn('id', $validatedData['tags'])->pluck('id')->toArray();
         
         $expense->tags()->sync($userTagIds);
