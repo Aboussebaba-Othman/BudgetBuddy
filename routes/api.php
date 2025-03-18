@@ -3,6 +3,8 @@ use App\Http\Controllers\AuthController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ExpenseController;
 use App\Http\Controllers\TagController;
+use App\Http\Controllers\API\GroupController;
+use App\Http\Controllers\API\GroupExpenseController;
 
 
 
@@ -17,5 +19,13 @@ Route::middleware('auth:sanctum')->group(function(){
     Route::post('/expenses/{id}/tags', [ExpenseController::class, 'attachTags']);
 
     Route::apiResource('tags', TagController::class);
+
+    Route::post('/groups', [GroupController::class, 'store']);
+    Route::get('/groups', [GroupController::class, 'index']);
+    Route::get('/groups/{group}', [GroupController::class, 'show']);
+    Route::delete('/groups/{group}', [GroupController::class, 'destroy']);
+    Route::post('/groups/{group}/expenses', [GroupExpenseController::class, 'store']);
+    Route::get('/groups/{group}/expenses', [GroupExpenseController::class, 'index']);
+    Route::delete('/groups/{group}/expenses/{expense}', [GroupExpenseController::class, 'destroy']);
 });
 

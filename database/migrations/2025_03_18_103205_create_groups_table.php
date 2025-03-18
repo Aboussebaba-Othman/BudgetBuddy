@@ -16,7 +16,6 @@ return new class extends Migration
             $table->string('name');
             $table->foreignId('created_by')->constrained('users')->onDelete('cascade');
             $table->string('currency')->default('DH');
-            $table->text('description')->nullable();
             $table->timestamps();
         });
     }
