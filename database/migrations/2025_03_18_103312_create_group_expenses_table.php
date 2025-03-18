@@ -13,6 +13,12 @@ return new class extends Migration
     {
         Schema::create('group_expenses', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('group_id')->constrained()->onDelete('cascade');
+            $table->foreignId('created_by')->constrained('users')->onDelete('cascade');
+            $table->string('title');
+            $table->decimal('amount', 10, 2);
+            $table->date('expense_date');
+            $table->enum('split_type', ['equal', 'percentage', 'amount'])->default('equal');
             $table->timestamps();
         });
     }
