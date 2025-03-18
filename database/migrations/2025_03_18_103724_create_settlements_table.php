@@ -13,6 +13,13 @@ return new class extends Migration
     {
         Schema::create('settlements', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('group_id')->constrained()->onDelete('cascade');
+            $table->foreignId('from_user_id')->constrained('users')->onDelete('cascade');
+            $table->foreignId('to_user_id')->constrained('users')->onDelete('cascade');
+            $table->decimal('amount', 10, 2);
+            $table->string('status')->default('pending'); // pending, completed, cancelled
+            $table->text('note')->nullable();
+            $table->timestamp('settled_at')->nullable();
             $table->timestamps();
         });
     }
