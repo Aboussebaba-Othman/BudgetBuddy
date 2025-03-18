@@ -13,7 +13,13 @@ return new class extends Migration
     {
         Schema::create('expense_shares', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('group_expense_id')->constrained()->onDelete('cascade');
+            $table->foreignId('user_id')->constrained()->onDelete('cascade');
+            $table->decimal('share_percentage', 5, 2)->nullable();
+            $table->decimal('share_amount', 10, 2)->nullable();
             $table->timestamps();
+            
+            $table->unique(['group_expense_id', 'user_id']);
         });
     }
 
