@@ -45,7 +45,7 @@ class GroupController extends Controller
             ]);
 
             foreach ($members as $memberId) {
-                $isAdmin = $memberId == $request->user()->id; // Le créateur est admin par défaut
+                $isAdmin = $memberId == $request->user()->id; 
                 $group->users()->attach($memberId, ['is_admin' => $isAdmin]);
             }
 

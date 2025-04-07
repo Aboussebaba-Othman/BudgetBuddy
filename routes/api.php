@@ -5,6 +5,7 @@ use App\Http\Controllers\ExpenseController;
 use App\Http\Controllers\TagController;
 use App\Http\Controllers\API\GroupController;
 use App\Http\Controllers\API\GroupExpenseController;
+use App\Http\Controllers\API\GroupBalanceController;
 
 
 
@@ -27,5 +28,8 @@ Route::middleware('auth:sanctum')->group(function(){
     Route::post('/groups/{group}/expenses', [GroupExpenseController::class, 'store']);
     Route::get('/groups/{group}/expenses', [GroupExpenseController::class, 'index']);
     Route::delete('/groups/{group}/expenses/{expense}', [GroupExpenseController::class, 'destroy']);
+
+    Route::get('/groups/{group}/balances', [GroupBalanceController::class, 'index']);
+
 });
 
